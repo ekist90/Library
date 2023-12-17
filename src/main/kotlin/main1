@@ -1,0 +1,48 @@
+fun main() {
+    val booksArray = Array(10) { Book("", "", "", false) }
+    val library = Library(booksArray)
+
+    val book1 = Book("B001", "The Catcher in the Rye", "J.D. Salinger", true)
+    val book2 = Book("B002", "To Kill a Mockingbird", "Harper Lee",  false)
+    val book3 = Book("B003", "1984", "George Orwell", true)
+    val book4 = Book("B004", "The Great Gatsby", "F. Scott Fitzgerald", false)
+    val book5 = Book("B005", "Brave New World", "Aldous Huxley", true)
+    val book6 = Book("B006", "The Hobbit", "J.R.R. Tolkien", true)
+    val book7 = Book("B007", "The Lord of the Rings", "J.R.R. Tolkien", false)
+    val book8 = Book("B008", "Pride and Prejudice", "Jane Austen", true)
+    val book9 = Book("B009", "The Hunger Games", "Suzanne Collins", false)
+    val book10 = Book("B010", "The Da Vinci Code", "Dan Brown", true)
+
+
+    library.addBook(book1)
+    library.addBook(book2)
+    library.addBook(book3)
+    library.addBook(book4)
+    library.addBook(book5)
+    library.addBook(book6)
+    library.addBook(book7)
+    library.addBook(book8)
+    library.addBook(book9)
+    library.addBook(book10)
+
+    println("---BOROWING---")
+    println()
+
+    val booksToBorrow = listOf(book1, book4, book10)
+
+    for (book in booksToBorrow) {
+        try {
+            // Attempting to borrow the book
+            book.borrowBook()
+            println("Book '${book.title}' borrowed successfully.")
+        } catch (e: BookNotAvailableException) {
+            println("Error: ${e.message}")
+        }
+    }
+    println()
+//    println("All Books:")
+//    library.displayBooks()
+    library.displayAvailableBooks()
+//library.searchBook("To Kill a Mockingbird")
+
+}
