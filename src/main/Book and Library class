@@ -1,0 +1,65 @@
+import java.time.LocalDate
+
+class BookNotAvailableException(bookName: String) : Exception("The book '$bookName' is not available for borrowing.")
+class Book(val bookId:String, val title:String,val author:String, var isAvailable:Boolean) {
+ private var dueDate: LocalDate? = null
+    fun borrowBook(){
+        if (isAvailable) {
+            isAvailable = false
+            dueDate=LocalDate.now().plusDays(14)
+        } else {
+            throw BookNotAvailableException(title)
+        }
+    }
+
+    fun returnBook(){
+        if (!isAvailable){
+            this.isAvailable=true
+            dueDate = null
+        }
+    }
+
+    override fun toString(): String {
+//        val availability = if (isAvailable) "Available" else "Not Available"
+//
+
+        return buildString {
+
+            appendLine("ID: $bookId")
+            appendLine("Title: $title")
+            appendLine("Author: $author")
+//            appendLine("Availability: $availability")
+            if (!isAvailable && dueDate != null) {
+                appendLine("Due Date: $dueDate")
+            }
+        }
+    }
+}
+class Library(val books:Array<Book>){
+
+    fun addBook(book: Book) {
+        for (i in books.indices) {
+            if (books[i].bookId.isEmpty()) {
+                books[i] = book
+                return
+            }
+        }
+        println("Library is full. Book not added.")
+    }
+  fun displayBooks(){
+      for(i in books.indices)
+          println(books[i])
+
+  }
+    fun displayAvailableBooks() {
+        println("Available Books in the Library:")
+        books.filter { it.isAvailable }.forEach { println(it) }
+    }
+    fun searchBook(title: String) {
+        for(i in books.indices)
+        if(title==books[i].title)
+            println(books[i])
+    }
+
+
+}
